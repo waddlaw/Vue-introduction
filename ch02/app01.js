@@ -31,6 +31,14 @@ var vm = new Vue({
       }
     }
   },
+  methods: {
+    doBuy() {
+      alert(this.totalPriceWithTax + '円のお買上げ!')
+      this.items.forEach(function (item) {
+        item.quantity = 0
+      })
+    }
+  },
   computed: {
     totalPrice() {
       return this.items.reduce(function (sum, item) {
@@ -40,8 +48,15 @@ var vm = new Vue({
     totalPriceWithTax() {
       return Math.floor(this.totalPrice * 1.08)
     },
-    someFunc() {
-      return this.item * 3
+    canBuy() {
+      return this.totalPrice >= 1000
+    },
+    errorMessageStyle() {
+      return {
+        border: this.canBuy ? '' : '1px solid red',
+        color: this.canBuy ? '' : 'red'
+      }
     }
   }
 })
+window.vm = vm
